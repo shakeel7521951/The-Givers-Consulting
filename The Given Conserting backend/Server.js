@@ -3,7 +3,9 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import connectDB from "./connectionDB/ConnDB.js";
 import userRoute from "./routes/userRoute.js";
-import { v2  } from "cloudinary";
+import blogRoute from "./routes/blogRoute.js";
+import commentRoute from "./routes/commentRoute.js";
+import { v2 } from "cloudinary";
 import fileUpload from "express-fileupload";
 import cors from 'cors';
 import error from './middlewhare/error.js'
@@ -13,12 +15,12 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cookieParser()); 
+app.use(cookieParser());
 
 app.use(
   cors({
     origin: process.env.FRONT_END_URL,
-    credentials: true, 
+    credentials: true,
   })
 );
 
@@ -36,6 +38,8 @@ v2.config({
 });
 
 app.use("/api/v1", userRoute);
+app.use("/api/v1", commentRoute);
+app.use("/api/v1", blogRoute);
 
 app.use(error)
 

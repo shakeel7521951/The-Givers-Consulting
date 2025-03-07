@@ -1,15 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-
 import { apiSlice } from './userRoutes/userApi';
 import userReducer from './userRoutes/userSlice';
+import { blogSlice } from './userRoutes/blogApi';
+import { commentSlice } from './userRoutes/commentApi';
 
 export const store = configureStore({
   reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer, // RTK Query slice
-    user: userReducer, // User slice
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    [blogSlice.reducerPath]: blogSlice.reducer, // ✅ Now matches "blogApi"
+    [commentSlice.reducerPath]: commentSlice.reducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware), // Add RTK Query middleware
+    getDefaultMiddleware().concat(apiSlice.middleware, blogSlice.middleware, commentSlice.middleware),
 });
 
 export default store;

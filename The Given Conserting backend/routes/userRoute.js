@@ -12,9 +12,11 @@ import {
   updateProfile,
   verifyOTP,
   verifyUser,
+  updateRole,
+  deleteUser
 } from "../controllers/userController.js";
 import express from "express";
-import { isUserLogedIn } from "../utils/auth.js";
+import { isUserLogedIn, isAdmin } from "../utils/auth.js";
 const router = express.Router();
 
 router.post("/signup", signup);
@@ -30,5 +32,9 @@ router.put("/reset-password", resetPassword);
 router.get("/get-single-user/:id", isUserLogedIn, getSingleUser);
 router.get("/get-all-users", isUserLogedIn, getAllUsers);
 router.delete("/delete-my-profile", isUserLogedIn, deleteMyProfile);
+
+// Delte and Update user Role routes:
+router.put("/update-role/:id", isUserLogedIn, isAdmin, updateRole);
+router.delete("/delete-user/:id", isUserLogedIn, isAdmin, deleteUser);
 
 export default router;

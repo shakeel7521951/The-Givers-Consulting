@@ -5,6 +5,11 @@ import Blogs from "./pages/Blogs";
 import BlogPage from "./pages/BlogPage";
 import NextGen from "./pages/Nextgen";
 import DevelopmentMarketing from "./pages/DevelopmentMarketing";
+import AdminBlogs from "./Dashboard/pages/AdminBlogs";
+import AdminNavbar from "./Dashboard/components/AdminNavbar";
+import User from "./Dashboard/components/User";
+import CreateBlogForm from "./Dashboard/components/CreateBlogForm";
+import Comments from "./Dashboard/components/Comments";
 
 import { Footer, Navbar } from "./component";
 import {
@@ -38,6 +43,13 @@ const MainLayout = () => (
     <ScrollToTop /> {/* Scroll to top on route change */}
     <Outlet />
     <Footer />
+  </div>
+);
+
+const AdminLayout = () => (
+  <div>
+    <AdminNavbar />
+    <Outlet />
   </div>
 );
 
@@ -92,6 +104,17 @@ const router = createBrowserRouter([
   },
   { path: "/forgot-password", element: <ForgotPassword /> },
   { path: "/reset-password", element: <ResetPassword /> },
+  {
+    path: "/dashboard",
+    element: <AdminLayout />,
+    children: [
+      { path: "/dashboard", element: <AdminBlogs /> },
+      { path: "/dashboard/blogs", element: <AdminBlogs /> },
+      { path: "/dashboard/users", element: <User /> },
+      { path: "/dashboard/create-form", element: <CreateBlogForm /> },
+      { path: "/dashboard/comments", element: <Comments /> },
+    ],
+  },
 ]);
 
 function App() {

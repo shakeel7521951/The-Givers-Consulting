@@ -21,7 +21,7 @@ const MyProfile = () => {
       try {
         const response = await updateProfile(formData).unwrap();
         dispatch(setProfile(response?.user));
-        setSelectedImage(URL.createObjectURL(profilePic)); 
+        setSelectedImage(URL.createObjectURL(profilePic));
         toast.success("Profile image updated!", { position: "top-center" });
       } catch (error) {
         toast.error(error.message || "Failed to update image.", {

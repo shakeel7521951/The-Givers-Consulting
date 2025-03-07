@@ -113,6 +113,7 @@ export const login = catchAsyncError(async (req, res, next) => {
     .json({
       success: true,
       message: "Login successful",
+      token,
       user,
     });
 });
@@ -354,4 +355,38 @@ export const deleteMyProfile = catchAsyncError(async (req, res, next) => {
     success: true,
     message: "Profile deleted successfully",
   });
+});
+
+// User Update and Delete Routes:
+export const updateRole = catchAsyncError(async (req, res, next) => {
+  const { role } = req.body;
+  const userId = req.params.id;
+
+  if (!["user", "admin"].includes(role)) {
+    return res.status(400).json({ message: "Invalid role provided" });
+  }
+
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { role },
+    { new: true } // Return updated user
+  );
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.json({ message: "User role updated successfully", user });
+});
+
+export const deleteUser = catchAsyncError(async (req, res, next) => {
+  const { id } = req.params;
+
+  const deletedUser = await User.findByIdAndDelete(id);
+
+  if (!deletedUser) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.status(200).json({ message: "User deleted successfully" });
 });

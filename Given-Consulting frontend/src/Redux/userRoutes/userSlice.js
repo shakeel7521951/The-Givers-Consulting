@@ -8,7 +8,7 @@ const userSlice = createSlice({
       try {
         return profile ? JSON.parse(profile) : null;
       } catch (e) {
-        return null; 
+        return null;
       }
     })(),
   },

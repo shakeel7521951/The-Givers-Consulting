@@ -47,7 +47,7 @@ export const apiSlice = createApi({
       }),
     }),
 
-    
+
     logout: builder.mutation({
       query: () => ({
         url: "/logout",
@@ -95,10 +95,37 @@ export const apiSlice = createApi({
     }),
 
     resetPassword: builder.mutation({
-      query: ({email,newPassword}) => ({
+      query: ({ email, newPassword }) => ({
         url: "/reset-password",
         method: "PUT",
-        body: {email,newPassword},
+        body: { email, newPassword },
+      }),
+    }),
+
+
+    // Get All Users:
+    getAllUsers: builder.query({
+      query: () => ({
+        url: "/get-all-users",
+        method: "GET",
+      }),
+    }),
+
+    // ✅ Update User Role
+    updateRole: builder.mutation({
+      query: ({ id, role }) => ({
+        url: `/update-role/${id}`,
+        method: "PUT",
+        body: { role },
+        headers: { "Content-Type": "application/json" },
+      }),
+    }),
+
+    // ✅ Delete User
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `/delete-user/${id}`,
+        method: "DELETE",
       }),
     }),
 
@@ -118,5 +145,8 @@ export const {
   useUpdateProfileMutation,
   useForgotPasswordMutation,
   useForgotPasswordVerifyOtpMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useGetAllUsersQuery,
+  useUpdateRoleMutation,
+  useDeleteUserMutation
 } = apiSlice;
